@@ -3,56 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yūrei - Blue Archive</title>
+    <title>Tōkaidō Yūrei</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Roboto', Arial, sans-serif;
-            background: linear-gradient(120deg, #00aaff, #ff77b1, #ffdd57);
+            color: white;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
             overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            animation: particleMove 3s infinite ease-in-out;
+        }
+
+        @keyframes particleMove {
+            0% { transform: translate(0, 0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translate(0, -20px); opacity: 0; }
         }
 
         .profile-card {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 20px;
-            padding: 40px;
-            width: 400px;
+            padding: 30px;
+            width: 350px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(20px);
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-card h2 {
+            font-size: 24px;
+            margin: 15px 0;
+            font-family: 'Creepster', cursive;
+            color: #d63031;
+            text-shadow: 1px 1px 5px black;
+        }
+
+        .profile-card p {
+            font-size: 16px;
+            color: #b0c4de;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #d63031;
         }
 
         /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 4;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             padding-top: 60px;
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: #2d3436;
             margin: 5% auto;
             padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            color: black;
+            border-radius: 10px;
+            color: white;
+            width: 70%;
         }
 
         .close {
@@ -64,95 +119,55 @@
 
         .close:hover,
         .close:focus {
-            color: black;
+            color: white;
             text-decoration: none;
             cursor: pointer;
         }
 
-        .profile-card img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            transition: transform 0.5s ease;
-        }
-
-        .profile-card h2 {
-            font-size: 26px;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 28px;
-            position: relative;
-        }
-
-        .social-icons a:hover {
-            color: #00bfff;
-        }
-
-        /* Tooltip */
-        .social-icons a .tooltip {
-            visibility: hidden;
-            width: 120px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Position the tooltip above the icon */
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .social-icons a:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* Theme Toggle */
         .theme-toggle {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* Styles untuk tema terang */
+        body.light {
+            background: linear-gradient(135deg, #dfe6e9, #b2bec3);
+            color: black;
+        }
+
+        .profile-card.light {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+
+        .social-icons a.light {
+            color: black;
+        }
     </style>
 </head>
 <body>
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    
+
     <div class="profile-card">
         <img src="https://telegra.ph/file/4ccca01111815f68c2ca2.jpg" alt="Profile Picture" onclick="openModal()">
         <h2>Tōkaidō Yūrei</h2>
-        <p>Tunggu aku sampai 2028 ya😇 atau sekitar 3 tahun 10 bulan dari 13 September 2024.</p>
+        <p>Menunggu... saat gelap menyelimuti... 😈</p>
         
         <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61554711097077&mibextid=rS40aB7S9Ucbxw6v" target="_blank"><i class="fab fa-facebook"></i><span class="tooltip">Facebook</span></a>
-            <a href="https://youtube.com/@florynfeatfuze?si=YoIed1UnZjlUu5nf" target="_blank"><i class="fab fa-youtube"></i><span class="tooltip">YouTube</span></a>
-            <a href="https://x.com/Kazukikazami03" target="_blank"><i class="fab fa-twitter"></i><span class="tooltip">Twitter</span></a>
-            <a href="https://www.instagram.com/kazukikazami03?igsh=YzljYTk1ODg3Zg==" target="_blank"><i class="fab fa-instagram"></i><span class="tooltip">Instagram</span></a>
-            <a href="https://www.tiktok.com/@tkaidyrei?_t=8plgzjZmGMk&_r=1" target="_blank"><i class="fab fa-tiktok"></i><span class="tooltip">TikTok</span></a>
-            <a href="https://maohgakuin.com" target="_blank"><i class="fas fa-globe"></i><span class="tooltip">Website</span></a>
-            <a href="https://sociabuzz.com/misha03/tribe" target="_blank"><i class="far fa-laugh-beam"></i><span class="tooltip">Support</span></a>
+            <a href="https://www.facebook.com/profile.php?id=61554711097077" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@florynfeatfuze" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://x.com/Kazukikazami03" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/kazukikazami03" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tkaidyrei" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://maohgakuin.com" target="_blank"><i class="fas fa-globe"></i></a>
+            <a href="https://sociabuzz.com/misha03/tribe" target="_blank"><i class="far fa-laugh-beam"></i></a>
         </div>
     </div>
 
@@ -160,13 +175,40 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>😇</h2>
-            <p>Follow dong tiktok aku @Tōkaidō Yūrei 東海道幽霊.😇</p>
+            <h2>Informasi Tambahan</h2>
+            <p>Hati-hati... bayangan akan selalu mengikuti...</p>
         </div>
     </div>
 
     <script>
-        // Modal Functionality
+        // Fungsi untuk menghasilkan partikel
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 15 + 5; // Ukuran partikel antara 5px dan 20px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.top = Math.random() * window.innerHeight + 'px';
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.animationDuration = Math.random() * 2 + 3 + 's'; // Durasi animasi acak
+                document.body.appendChild(particle);
+            }
+        }
+
+        createParticles(); // Panggil fungsi untuk membuat partikel
+
+        let darkMode = true;
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('light', !darkMode);
+            document.querySelector('.profile-card').classList.toggle('light', !darkMode);
+            document.querySelectorAll('.social-icons a').forEach(icon => {
+                icon.classList.toggle('light', !darkMode);
+            });
+        }
+
         function openModal() {
             document.getElementById("myModal").style.display = "block";
         }
@@ -175,21 +217,12 @@
             document.getElementById("myModal").style.display = "none";
         }
 
-        // Close modal when clicking outside of the modal
         window.onclick = function(event) {
             if (event.target == document.getElementById("myModal")) {
                 closeModal();
             }
         }
-
-        // Theme Toggle Functionality
-        let darkMode = false;
-        function toggleTheme() {
-            darkMode = !darkMode;
-            document.body.style.background = darkMode ? 'linear-gradient(120deg, #1a1a1a, #333333)' : 'linear-gradient(120deg, #00aaff, #ff77b1, #ffdd57)';
-            document.body.style.color = darkMode ? 'white' : 'black';
-            document.querySelector('.theme-toggle').innerText = darkMode ? '☀️' : '🌙';
-        }
     </script>
 </body>
-                                                                                         </html>
+    </html>
+    
