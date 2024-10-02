@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Anime Gallery - Tokidoki Bosotto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fceef5;
+            color: #333;
+            line-height: 1.6;
+            background-size: cover;
+            background-position: center;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #333;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-bottom: 3px solid #ff69b4;
+            border-radius: 0 0 15px 15px;
+        }
+
+        header .logo h1 {
+            font-family: 'Cute Font', cursive;
+            font-size: 2.2rem;
+            margin-left: 20px;
+            color: #ff69b4;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-right: 20px;
+        }
+
+        nav ul li {
+            margin-left: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ff69b4;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #ff92a4;
+            color: white;
+        }
+
+        /* Animasi Gulir */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 80px 20px;
+            background-image: url('suou1.jpg'); /* Ganti dengan gambar dari galeri */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            border-bottom: 3px solid #ff69b4;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-family: 'Cute Font', cursive;
+            color: #ff69b4;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: #ffd6e1;
+        }
+
+        /* Anime Keren Section */
+        .anime-keren {
+            padding: 30px 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .anime-keren h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            color: #ff69b4;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .anime-item {
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .anime-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .anime-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        .anime-item h3 {
+            font-family: 'Cute Font', cursive;
+            font-size: 1.5rem;
+            color: #ff69b4;
+            margin: 10px;
+        }
+
+        .anime-item p {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .video-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Segoe Print', cursive;
+            color: #ff69b4;
+        }
+
+        .video-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff92a4, #fceef5);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .video-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .photo-gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Segoe Print', cursive;
+            color: #ff69b4;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .gallery img {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 5px solid #ff69b4;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            font-size: 0.8rem;
+            border-top: 3px solid #ff69b4;
+        }
+
+        footer .socials {
+            margin-bottom: 10px;
+        }
+
+        footer .socials a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #ff69b4;
+            font-size: 1.2rem;
+        }
+
+        footer .socials a:hover {
+            color: #ff92a4;
+        }
+
+        footer p {
+            font-family: 'Cute Font', cursive;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Tokidoki Bosotto</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#video">Video</a></li>
+                <li><a href="#anime-keren">Anime Keren</a></li>
+                <li><a href="#gallery">Photo Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero fade-in">
+        <h2>Welcome to Anime Gallery</h2>
+        <p>Your one-stop destination for all things anime!</p>
+    </section>
+
+    <section id="video" class="video-section fade-in">
+        <h2>Video</h2>
+        <div class="video-grid">
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Abernyu</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">waifumu kesurupan rek</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://vm.tiktok.com/ZS2sMvYQ1/" target="_blank">rorr</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">dmd</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei5.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">malu-malu kebo</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei6.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Tōkaidō Yūrei 東海道幽霊002v2</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei7.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Tōkaidō Yūrei 東海道幽霊002v2</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei8.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Tōkaidō Yūrei 東海道幽霊002v2</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei9.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">ICU</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei10.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">GOYANG DULU REK</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei11.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">horisan</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei12.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">aqua alinea</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei13.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">rorr</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei14.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Kazuki kazami</a></a></h3>
+            </div>
+                   <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei15.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Highschool dxd</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei16.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Kurumi</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei17.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Gabriel miku</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei18.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">@fhrzi</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei19.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">maou gakuin no futekigousha</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei20.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Reine murasame</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei21.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">hoshino chicken</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei22.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">sasha tuh malu-malu</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei23.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">kebutuhan dxdx tohka</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei24.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">arsip biru</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei25.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">anyaru-chan</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei26.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">vtuber</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei27.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">tot tot</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei28.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">hode</a></h3>
+            </div>
+                    <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei29.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">Reine murasame</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei30.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">date a live</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei31.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">date a live</a></h3>
+            </div>
+                        <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei32.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">oh no foul</a></h3>
+            </div>
+            <div class="video-container">
+                <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="yurei33.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://www.example.com/ikigai" target="_blank">sindrom hinamizawa</a></h3>
+            </div>
+            <div class="video-container">            
+            <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="rahim ayano.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="https://vm.tiktok.com/ZS2GPGK79/" target="_blank">rahim ayano</a></h3>
+            </div>
+            <div class="video-container">            
+            <video controls controlsList="nodownload" poster="suou.jpg">
+                    <source src="ayano.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3><a href="" target="_blank">ayano</a></h3>
+            </div>            
+        </div>
+    </section>
+
+
+    <section id="anime-keren" class="anime-keren fade-in">
+        <h2>Anime Keren</h2>
+        <div class="anime-grid">
+            <div class="anime-item fade-in">
+                <img src="anime1.jpg" alt="Anime 1">
+                <h3>Anime 1</h3>
+                <p>Description of Anime 1</p>
+            </div>
+            <div class="anime-item fade-in">
+                <img src="anime2.jpg" alt="Anime 2">
+                <h3>Anime 2</h3>
+                <p>Description of Anime 2</p>
+            </div>
+            <div class="anime-item fade-in">
+                <img src="anime3.jpg" alt="Anime 3">
+                <h3>Anime 3</h3>
+                <p>Description of Anime 3</p>
+            </div>
+            <!-- Tambahkan lebih banyak item anime sesuai kebutuhan -->
+        </div>
+    </section>
+
+    <section id="gallery" class="photo-gallery fade-in">
+        <h2>Photo Gallery</h2>
+        <div class="gallery">
+            <img src="kurumi.jpg" alt="Photo 1">
+            <img src="kurumi2.jpg" alt="Photo 2">
+            <img src="suou2.jpg" alt="Photo 3">
+            <!-- Tambahkan lebih banyak gambar sesuai kebutuhan -->
+        </div>
+    </section>
+
+    <footer>
+              <div class="socials">
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://facebook.com" target="_blank">yurei</a>            
+        <p>&copy; 2024 Tokidoki Bosotto. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Add scroll animation
+        const sections = document.querySelectorAll('.fade-in');
+        const options = {
+            threshold: 0.1 // Adjusts when the animation starts
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Scroll to section on navigation click
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default anchor click behavior
+                const targetId = link.getAttribute('href'); // Get target section ID
+                const targetSection = document.querySelector(targetId); // Select target section
+                targetSection.scrollIntoView({
+                    behavior: 'smooth' // Smooth scroll animation
+                });
+            });
+        });
+    </script>
+</body>
+</html>
